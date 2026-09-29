@@ -27,7 +27,7 @@ También hay una copia en [`docs/`](docs/) para búsqueda y control de versiones
 
 ## Sprints
 
-Plan de 6 sprints de 2 semanas (releases mensuales). El seguimiento se hace en el **[tablero de GitHub Projects](https://github.com/users/Jenifrutica/projects/)**.
+Plan de 6 sprints de 2 semanas (releases mensuales). El seguimiento se hace en el **[tablero de GitHub Projects](https://github.com/users/Jenifrutica/projects/2)**.
 
 | Sprint | Objetivo / Módulo | Historias | Entregable |
 | --- | --- | --- | --- |
