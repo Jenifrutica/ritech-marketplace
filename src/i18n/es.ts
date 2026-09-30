@@ -200,6 +200,11 @@ export const es = {
   "overview.kpi.revenue": "Comisiones cobradas",
   "overview.kpi.orders": "Pedidos activos",
   "overview.recent": "Actividad reciente",
+  "chart.label": "Mes y producto",
+  "chart.value": "Ventas",
+  "feed.count": "{shown} de {total}",
+  "certs.fileTypeError": "Solo se aceptan archivos PDF.",
+  "certs.notAdded": "{name} no se pudo agregar.",
   "chart.hint": "Pasa el cursor o usa las flechas para ver cada valor",
   "chart.showData": "Ver datos en tabla",
   "chart.hideData": "Ocultar tabla",
@@ -346,6 +351,15 @@ export const es = {
   "publish.feePreview": "Comisión estimada por venta completa: {fee}",
 
   // Mis lotes
+  "profile.title": "Perfil del vendedor",
+  "profile.lead": "Datos de registro que ven los compradores al negociar.",
+  "profile.capacity": "Capacidad de producción",
+  "profile.capacityValue": "{n} kg al año",
+  "profile.products": "Tipo de producto",
+  "profile.varieties": "Variedades",
+  "profile.quality": "Calidad comprometida",
+  "profile.qualityValue": "Café ≥ 84 puntos SCA · Cacao ≥ 75% fermentación",
+  "profile.farms": "Fincas asociadas",
   "myLots.title": "Mis lotes",
   "myLots.lead": "Lotes publicados por tu organización.",
 

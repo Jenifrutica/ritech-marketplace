@@ -33,6 +33,8 @@ export type DropzoneProps = React.ComponentProps<"div"> &
     showReceipt?: boolean;
     /** Localized replacement for the generated accept/size help line. */
     helpText?: React.ReactNode;
+    /** Localized rejection copy. */
+    messages?: { fileType?: string; notAdded?: (name: string) => string };
   };
 function fileSize(bytes: number) {
   return bytes < 1024
@@ -64,6 +66,7 @@ export function Dropzone({
   disabled,
   showReceipt = true,
   helpText,
+  messages,
   onDragEnter,
   onDragOver,
   onDragLeave,
@@ -88,7 +91,7 @@ export function Dropzone({
         rejected.push({
           file,
           code: "file-type",
-          reason: "This file type is not accepted.",
+          reason: messages?.fileType ?? "This file type is not accepted.",
         });
       else if (
         maxSize !== undefined &&
@@ -279,10 +282,9 @@ export function Dropzone({
           <MotionSurface key="error" asChild preset="fade">
             <p id={`${id}-error`} data-slot="dropzone-error" role="alert">
               <b>
-                {rejections.length === 1
-                  ? rejections[0].file.name
-                  : `${rejections.length} files`}{" "}
-                couldn’t be added.
+                {messages?.notAdded
+                  ? messages.notAdded(rejections.length === 1 ? rejections[0].file.name : String(rejections.length))
+                  : `${rejections.length === 1 ? rejections[0].file.name : `${rejections.length} files`} couldn’t be added.`}
               </b>{" "}
               {rejections[0].reason}
             </p>

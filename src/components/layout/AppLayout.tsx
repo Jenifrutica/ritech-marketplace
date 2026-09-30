@@ -154,7 +154,7 @@ export function AppLayout({ role }: { role: Role }) {
                 <Icon name="menu" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="start" showCloseButton>
+            <SheetContent side="start" showCloseButton closeLabel={t("common.close")}>
               <SheetHeader>
                 <SheetTitle>{roleLabel}</SheetTitle>
                 <SheetDescription>{me ? t("common.signedInAs", { name: me.name }) : ""}</SheetDescription>

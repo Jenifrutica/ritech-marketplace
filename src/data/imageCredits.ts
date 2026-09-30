@@ -1,6 +1,5 @@
 /** Imágenes libres de Wikimedia Commons descargadas en public/images. Las licencias CC BY y CC BY-SA exigen atribución. */
 export type ImageId =
-  | "hero-narino"
   | "galeras"
   | "cafe-flor"
   | "cereza-cafe"
@@ -23,7 +22,6 @@ export type ImageCredit = {
 };
 
 export const imageCredits: ImageCredit[] = [
-  {"id": "hero-narino", "file": "Paisaje Nariñense.jpg", "author": "MARIO ALFONSO GUDIÑO DAVILA", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0", "source": "https://commons.wikimedia.org/wiki/File:Paisaje_Nari%C3%B1ense.jpg", "alt": {"es": "Paisaje de montaña con cascada y vegetación en Nariño", "en": "Mountain landscape with a waterfall and vegetation in Nariño"}},
   {"id": "galeras", "file": "Volcán Galeras (35).jpg", "author": "IShosholoza", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0", "source": "https://commons.wikimedia.org/wiki/File:Volc%C3%A1n_Galeras_(35).jpg", "alt": {"es": "Volcán Galeras visto desde Pasto, Nariño", "en": "Galeras volcano seen from Pasto, Nariño"}},
   {"id": "cafe-flor", "file": "Café en Flor.jpg", "author": "MARIO ALFONSO GUDIÑO DAVILA", "license": "CC BY-SA 4.0", "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0", "source": "https://commons.wikimedia.org/wiki/File:Caf%C3%A9_en_Flor.jpg", "alt": {"es": "Cafeto en flor con hojas verdes", "en": "Coffee plant in bloom with green leaves"}},
   {"id": "cereza-cafe", "file": "Coffee arabica cherry.jpg", "author": "Roger Burger", "license": "CC0", "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en", "source": "https://commons.wikimedia.org/wiki/File:Coffee_arabica_cherry.jpg", "alt": {"es": "Cerezas de café maduras en la rama", "en": "Ripe coffee cherries on the branch"}},

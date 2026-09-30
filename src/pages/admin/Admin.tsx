@@ -105,6 +105,7 @@ export function AdminOverview() {
               initialVisible={5}
               pageSize={5}
               showMoreLabel={t("common.showMore")}
+              countLabel={(shown, total) => t("feed.count", { shown, total })}
               entries={state.audit.slice(0, 15).map((a) => {
                 const u = user(a.userId);
                 return {

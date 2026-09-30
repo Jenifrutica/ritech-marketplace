@@ -98,7 +98,7 @@
   /* marcas propias de RiTech (para texto y detalles) */
   --rt-cherry: #9E2B20;
   --rt-leaf: #3F5A2C;
-  --rt-photo-scrim: rgba(33, 22, 15, .62);
+  --rt-photo-scrim: rgba(33, 22, 15, .70);
 }
 
 ::selection {
@@ -180,7 +180,12 @@ a.rt-link:focus-visible {
 }
 
 /* DM Sans da a la coma decimal ancho de dígito con tnum; se usan cifras proporcionales. */
-.tabular-nums {
+.tabular-nums,
+.v-chart-grid text,
+.v-chart-axis text,
+.v-chart-tooltip__row strong,
+.v-chart-tooltip__total > strong,
+.v-chart-summary > strong {
   font-variant-numeric: proportional-nums lining-nums;
 }
 

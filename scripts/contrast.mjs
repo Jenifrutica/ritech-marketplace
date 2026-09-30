@@ -68,6 +68,20 @@ for (const [fg, bg, min] of pairs) {
   if (!ok) failed++;
   console.log(`${ok ? "OK  " : "FAIL"} ${r.toFixed(2).padStart(5)}:1 (min ${min}) ${fg} ${tokens[fg]} sobre ${bg} ${tokens[bg]}`);
 }
+// Texto sobre fotos: la capa sólida semitransparente (--rt-photo-scrim) compuesta sobre
+// el peor píxel posible de la foto (blanco puro). Colores de texto usados sobre fotos.
+const scrim = css.match(/--rt-photo-scrim:\s*rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+if (scrim) {
+  const [r, g, b, a] = scrim.slice(1).map(Number);
+  const toHex = (v) => Math.round(v).toString(16).padStart(2, "0");
+  const worst = "#" + [r, g, b].map((c) => toHex(a * c + (1 - a) * 255)).join("");
+  for (const fg of ["#FBF6EC", "#EFE4D3"]) {
+    const r2 = ratio(fg, worst);
+    if (r2 < text) failed++;
+    console.log(`${r2 >= text ? "OK  " : "FAIL"} ${r2.toFixed(2).padStart(5)}:1 (min 4.5) ${fg} sobre foto con capa ${a} (peor caso ${worst})`);
+  }
+}
+
 // Blanco sobre el relleno de peligro (botón destructivo)
 const white = ratio("#FFFFFF", tokens["--v-danger-fill"]);
 console.log(`${white >= text ? "OK  " : "FAIL"} ${white.toFixed(2).padStart(5)}:1 (min 4.5) #FFFFFF sobre --v-danger-fill`);

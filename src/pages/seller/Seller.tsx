@@ -12,7 +12,8 @@ import { Notice } from "@/components/common/Notice";
 import { BarChart } from "@/components/ui/bar-chart";
 import { rolePath } from "@/components/layout/roleNav";
 import { LotCard } from "@/components/common/LotCard";
-import { EmptyBlock, Kpi, PageHeader, PendingList, Section, type PendingItem } from "@/components/common/Page";
+import { DataList, EmptyBlock, Kpi, PageHeader, PendingList, Section, type PendingItem } from "@/components/common/Page";
+import { ExampleBadge } from "@/components/common/StatusBadge";
 import { useNotify } from "@/components/common/Notify";
 import { monthlySales } from "@/data/seed";
 import { commission, validateQuantity } from "@/domain/rules";
@@ -61,7 +62,10 @@ export function SellerOverview() {
           <li><Kpi label={t("overview.kpi.inEscrow")} value={myTx.filter((tx) => tx.escrow === "held").length} icon="lock-keyhole" /></li>
           <li><Kpi label={t("overview.kpi.salesYear")} value={eur(salesYear)} icon="banknote" /></li>
         </ul>
-        <PendingList items={pending} />
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <PendingList items={pending} />
+          <SellerProfile />
+        </div>
         <Card>
           <SalesChart data={data} />
         </Card>
@@ -70,8 +74,32 @@ export function SellerOverview() {
   );
 }
 
+/** LIT-71: perfil del vendedor con los requisitos de registro (datos de ejemplo). */
+function SellerProfile() {
+  const { t, num } = useI18n();
+  const { state, me } = useStore();
+  const farms = state.farms.filter((f) => f.sellerId === me?.id);
+  const products = Array.from(new Set(farms.flatMap((f) => f.products)));
+  const varieties = Array.from(new Set(farms.flatMap((f) => f.varieties)));
+  return (
+    <Card>
+      <Section title={t("profile.title")} description={t("profile.lead")} actions={<ExampleBadge />}>
+        <DataList
+          items={[
+            { label: t("profile.capacity"), value: t("profile.capacityValue", { n: num(18000) }) },
+            { label: t("profile.products"), value: products.map((p) => t(`product.${p}` as MessageKey)).join(", ") },
+            { label: t("profile.varieties"), value: varieties.join(", ") },
+            { label: t("profile.quality"), value: t("profile.qualityValue") },
+            { label: t("profile.farms"), value: farms.map((f) => `${f.name} (${f.municipality})`).join(", ") },
+          ]}
+        />
+      </Section>
+    </Card>
+  );
+}
+
 function SalesChart({ data }: { data: { label: string; coffee: number; cacao: number }[] }) {
-  const { t, eur } = useI18n();
+  const { t, eur, locale } = useI18n();
   return (
     <BarChart
       caption={t("overview.salesChart")}
@@ -82,7 +110,8 @@ function SalesChart({ data }: { data: { label: string; coffee: number; cacao: nu
         { key: "cacao", label: t("product.cacao"), color: "olive" },
       ]}
       valueFormatter={(v) => eur(v)}
-      labels={{ hint: t("chart.hint"), showData: t("chart.showData"), hideData: t("chart.hideData") }}
+      labels={{ hint: t("chart.hint"), showData: t("chart.showData"), hideData: t("chart.hideData"), label: t("chart.label"), value: t("chart.value") }}
+      locale={locale}
       showTable
     />
   );

@@ -428,11 +428,16 @@ export type ChartDataTableProps = {
   data: ChartDatum[];
   caption?: string;
   visuallyHidden?: boolean;
+  /** Localized column headings. */
+  headings?: { label?: string; value?: string };
+  formatValue?: (value: number) => string;
 };
 export function ChartDataTable({
   data,
   caption = "Chart data",
   visuallyHidden = true,
+  headings,
+  formatValue,
 }: ChartDataTableProps) {
   const hasNotes = data.some((item) => item.note || item.value === null);
   const content = (
@@ -443,8 +448,8 @@ export function ChartDataTable({
       <TableCaption>{caption}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Label</TableHead>
-          <TableHead numeric>Value</TableHead>
+          <TableHead>{headings?.label ?? "Label"}</TableHead>
+          <TableHead numeric>{headings?.value ?? "Value"}</TableHead>
           {hasNotes && <TableHead>Note</TableHead>}
         </TableRow>
       </TableHeader>
@@ -452,7 +457,7 @@ export function ChartDataTable({
         {data.map((item, index) => (
           <TableRow key={index}>
             <TableCell>{item.label}</TableCell>
-            <TableCell numeric>{item.value ?? "—"}</TableCell>
+            <TableCell numeric>{item.value === null ? "—" : formatValue ? formatValue(item.value) : item.value}</TableCell>
             {hasNotes && (
               <TableCell>
                 {item.note ?? (item.value === null ? "Not observed" : "")}
@@ -489,7 +494,9 @@ export type ChartFrameProps = {
   /** An explicit source measure; it does not change when a legend series is hidden. */
   summary?: { label: string; value: React.ReactNode; detail?: string };
   /** Localized interface copy for the hint and the data-table toggle. */
-  labels?: { hint?: string; showData?: string; hideData?: string };
+  labels?: { hint?: string; showData?: string; hideData?: string; label?: string; value?: string };
+  /** Locale for axis tick numbers; defaults to the browser locale. */
+  locale?: string;
   children: (plot: ChartPlotState) => React.ReactNode;
 };
 export type ChartPlotState = {
@@ -885,6 +892,8 @@ export function ChartFrame({
                   data={tableData}
                   caption={caption}
                   visuallyHidden={!tableShown}
+                  headings={{ label: labels?.label, value: labels?.value }}
+                  formatValue={valueFormatter}
                 />
               </div>
             )}

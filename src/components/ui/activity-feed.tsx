@@ -38,6 +38,8 @@ export type ActivityFeedProps = Omit<
   initialVisible?: number;
   pageSize?: number;
   showMoreLabel?: React.ReactNode;
+  /** Localized "shown of total" copy, used visibly and in the live announcement. */
+  countLabel?: (shown: number, total: number) => string;
 };
 
 function count(value: number | undefined, fallback: number) {
@@ -54,6 +56,7 @@ export function ActivityFeed({
   initialVisible,
   pageSize = 3,
   showMoreLabel,
+  countLabel,
   className,
   "aria-label": ariaLabel,
   "aria-labelledby": labelledBy,
@@ -100,7 +103,7 @@ export function ActivityFeed({
     focusIndex.current = visible.length;
     const nextCount = visible.length + nextPage;
     setWindowState((value) => ({ ...value, limit: nextCount }));
-    setAnnouncement(`${nextCount} of ${entries.length} activities shown.`);
+    setAnnouncement(countLabel ? countLabel(nextCount, entries.length) : `${nextCount} of ${entries.length} activities shown.`);
   };
   return (
     <section
@@ -242,7 +245,7 @@ export function ActivityFeed({
                 {showMoreLabel ?? `Show ${nextPage} more`}
               </Button>
               <Meta>
-                {visible.length} of {entries.length}
+                {countLabel ? countLabel(visible.length, entries.length) : `${visible.length} of ${entries.length}`}
               </Meta>
             </footer>
           )}

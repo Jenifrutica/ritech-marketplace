@@ -64,13 +64,13 @@ export const farms: Farm[] = [
 
 export const certificates: Certificate[] = [
   { id: "c-1", farmId: "f-mirador", type: "origin", fileName: "origen-el-mirador.pdf", issuedBy: "Comité de Cafeteros de Nariño", validUntil: "2027-06-01", status: "validated", uploadedAt: "2026-06-01" },
-  { id: "c-2", farmId: "f-mirador", type: "deforestation", fileName: "eudr-el-mirador.pdf", issuedBy: "Verificador EUDR (ejemplo)", validUntil: "2027-05-15", status: "validated", uploadedAt: "2026-06-01" },
+  { id: "c-2", farmId: "f-mirador", type: "deforestation", fileName: "eudr-el-mirador.pdf", issuedBy: "Verificador EUDR", validUntil: "2027-05-15", status: "validated", uploadedAt: "2026-06-01" },
   { id: "c-3", farmId: "f-esperanza", type: "origin", fileName: "origen-la-esperanza.pdf", issuedBy: "Comité de Cafeteros de Nariño", validUntil: "2027-06-04", status: "validated", uploadedAt: "2026-06-04" },
-  { id: "c-4", farmId: "f-esperanza", type: "deforestation", fileName: "eudr-la-esperanza.pdf", issuedBy: "Verificador EUDR (ejemplo)", validUntil: "2026-11-10", status: "validated", uploadedAt: "2026-06-04" },
-  { id: "c-5", farmId: "f-esperanza", type: "organic", fileName: "organico-la-esperanza.pdf", issuedBy: "Certificadora orgánica (ejemplo)", validUntil: "2027-02-28", status: "validated", uploadedAt: "2026-06-10" },
+  { id: "c-4", farmId: "f-esperanza", type: "deforestation", fileName: "eudr-la-esperanza.pdf", issuedBy: "Verificador EUDR", validUntil: "2026-11-10", status: "validated", uploadedAt: "2026-06-04" },
+  { id: "c-5", farmId: "f-esperanza", type: "organic", fileName: "organico-la-esperanza.pdf", issuedBy: "Certificadora orgánica", validUntil: "2027-02-28", status: "validated", uploadedAt: "2026-06-10" },
   { id: "c-6", farmId: "f-altobonito", type: "origin", fileName: "origen-alto-bonito.pdf", issuedBy: "Comité de Cafeteros de Nariño", validUntil: "2027-09-18", status: "pending", uploadedAt: "2026-09-18" },
-  { id: "c-7", farmId: "f-villarosa", type: "origin", fileName: "origen-villa-rosa.pdf", issuedBy: "Fedecacao (ejemplo)", validUntil: "2027-06-06", status: "validated", uploadedAt: "2026-06-06" },
-  { id: "c-8", farmId: "f-villarosa", type: "deforestation", fileName: "eudr-villa-rosa.pdf", issuedBy: "Verificador EUDR (ejemplo)", validUntil: "2027-06-06", status: "validated", uploadedAt: "2026-06-06" },
+  { id: "c-7", farmId: "f-villarosa", type: "origin", fileName: "origen-villa-rosa.pdf", issuedBy: "Fedecacao", validUntil: "2027-06-06", status: "validated", uploadedAt: "2026-06-06" },
+  { id: "c-8", farmId: "f-villarosa", type: "deforestation", fileName: "eudr-villa-rosa.pdf", issuedBy: "Verificador EUDR", validUntil: "2027-06-06", status: "validated", uploadedAt: "2026-06-06" },
 ];
 
 export const lots: Lot[] = [

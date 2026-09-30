@@ -453,6 +453,7 @@ export function Certificates() {
                   aria-labelledby="cert-file-label"
                   aria-label={undefined}
                   helpText={t("certs.dropHint")}
+                  messages={{ fileType: t("certs.fileTypeError"), notAdded: (name) => t("certs.notAdded", { name }) }}
                   onFilesSelected={(files) => setFile(files[0] ?? null)}
                   showReceipt={false}
                 >

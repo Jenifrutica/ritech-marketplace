@@ -47,12 +47,13 @@ export const sheetContentVariants = cva(
 );
 export type SheetContentProps = React.ComponentProps<
   typeof Primitive.Content
-> & { showCloseButton?: boolean; /** Logical viewport edge; follows dir or DirectionProvider. */ side?: "start" | "end" };
+> & { showCloseButton?: boolean; /** Localized accessible name for the close button. */ closeLabel?: string; /** Logical viewport edge; follows dir or DirectionProvider. */ side?: "start" | "end" };
 export function SheetContent({
   className,
   ref,
   children,
   showCloseButton = false,
+  closeLabel = "Close",
   side = "end",
   dir,
   ...props
@@ -74,7 +75,7 @@ export function SheetContent({
       >
         {children}
         {showCloseButton && (
-          <SheetClose aria-label="Close" className="absolute right-4 top-4">
+          <SheetClose aria-label={closeLabel} className="absolute right-4 top-4">
             ×
           </SheetClose>
         )}
