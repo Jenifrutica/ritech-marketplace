@@ -1,0 +1,72 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam nodesep 18
+skinparam ranksep 28
+skinparam componentStyle uml2
+skinparam component {
+  BackgroundColor #EAF2FB
+  BorderColor #2C5AA0
+}
+skinparam interface {
+  BackgroundColor #FFFFFF
+  BorderColor #C0392B
+}
+
+component "Web UI\n(React SPA)" as UI
+
+package "Módulos de negocio (Django apps)" as MODS {
+  component "Autenticación\ny usuarios" as AUTH
+  component "Fincas y\ntrazabilidad EUDR" as FINCA
+  component "Marketplace" as MKT
+  component "Transacciones\ny escrow" as TX
+  component "Calidad" as CAL
+  component "Logística\n(tracker)" as LOG
+  component "Administración" as ADMIN
+}
+
+component "Generación de\ndocumentos PDF" as PDF
+
+interface "Auth API" as IAuth
+interface "Fincas API" as IFinca
+interface "Marketplace API" as IMkt
+interface "Transacciones API" as ITx
+interface "Calidad API" as ICal
+interface "Logística API" as ILog
+interface "Admin API" as IAdmin
+interface "Persistencia\nPostgreSQL + PostGIS" as IDB
+interface "Almacenamiento S3\n(certificados y PDF)" as IS3
+
+' interfaces provistas (lollipop)
+AUTH -up- IAuth
+FINCA -up- IFinca
+MKT -up- IMkt
+TX -up- ITx
+CAL -up- ICal
+LOG -up- ILog
+ADMIN -up- IAdmin
+
+' interfaces requeridas (socket)
+UI ..> IAuth
+UI ..> IFinca
+UI ..> IMkt
+UI ..> ITx
+UI ..> ICal
+UI ..> ILog
+UI ..> IAdmin
+
+' dependencias entre módulos
+TX ..> IFinca
+TX ..> IMkt
+CAL ..> ITx
+LOG ..> ITx
+ADMIN ..> IAuth
+TX ..> PDF
+
+' persistencia y archivos (socket a nivel de paquete)
+MODS ..> IDB
+MODS ..> IS3
+PDF ..> IS3
+@enduml

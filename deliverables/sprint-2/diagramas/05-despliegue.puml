@@ -1,0 +1,46 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam node {
+  BackgroundColor #F2F7FF
+  BorderColor #2C5AA0
+}
+skinparam artifact {
+  BackgroundColor #FFFFFF
+}
+
+node "Navegador del usuario\n<<device>>" as BROWSER {
+  artifact "SPA React (HTML/CSS/JS)" as spa
+}
+
+node "AWS S3 + CloudFront\n<<device>>" as CDN {
+  artifact "Build estático de React" as build
+}
+
+node "AWS Elastic Beanstalk\n<<device>>" as APP {
+  artifact "ritech-api\nDjango + Gunicorn" as api
+}
+
+node "AWS RDS\n<<device>>" as DB {
+  artifact "PostgreSQL 16 + PostGIS\n(usuarios, fincas, lotes,\ntransacciones, tracker)" as pg
+}
+
+node "AWS S3 (documentos)\n<<device>>" as S3 {
+  artifact "Certificados, muestras y PDF" as docs
+}
+
+node "AWS CloudWatch\n<<device>>" as CW {
+  artifact "Logs y métricas" as logs
+}
+
+cloud "Pasarela / Fiducia\n(escrow simulado)" as PAY
+
+BROWSER --> CDN : HTTPS (carga SPA)
+BROWSER --> APP : HTTPS / REST + JSON
+APP --> DB : TCP 5432
+APP --> S3 : HTTPS (archivos)
+APP --> CW : métricas y logs
+APP --> PAY : API (simulada, primera entrega)
+@enduml

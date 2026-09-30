@@ -1,0 +1,33 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+skinparam rectangle {
+  BackgroundColor #F2F7FF
+  BorderColor #2C5AA0
+}
+
+actor "Comprador UE" as comprador
+actor "Vendedor" as vendedor
+actor "Propietario de finca" as propietario
+actor "Administrador\ndel sistema" as admin
+actor "Administrador\ntécnico" as adminTech
+actor "Transportador" as transportador
+actor "Laboratorio de café\n(universidad)" as lab
+actor "Pasarela / Fiducia\n(escrow)" as pasarela
+actor "DIAN / Autoridades\naduaneras" as dian
+
+rectangle "RiTech SAS\nMarketplace + Trazabilidad café/cacao a la UE" as SYS
+
+comprador --> SYS : busca y negocia lotes, compra,\nverifica muestra, aprueba pago
+vendedor --> SYS : publica lotes, negocia
+propietario --> SYS : registra finca y certificados
+admin --> SYS : gestiona usuarios, disputas,\nbloqueos y comisiones
+adminTech --> SYS : auditoría y respaldos
+transportador --> SYS : actualiza el tracker del pedido
+SYS --> lab : solicita parámetros de calidad
+SYS --> pasarela : bloquea / libera dinero (simulado)
+SYS --> dian : genera documentos de exportación
+@enduml

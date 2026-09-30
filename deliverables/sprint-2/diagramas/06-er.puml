@@ -1,0 +1,170 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam linetype ortho
+
+entity "usuario" as usuario {
+  * id : UUID <<PK>>
+  --
+  email : varchar <<UNIQUE>>
+  password_hash : varchar
+  nombre : varchar
+  identificacion : varchar
+  firma : varchar
+  rol : varchar
+  estado : varchar
+  fecha_registro : timestamp
+}
+
+entity "finca" as finca {
+  * id : UUID <<PK>>
+  --
+  propietario_id : UUID <<FK>>
+  nombre : varchar
+  ubicacion : geometry(Polygon,4326)
+  area_ha : numeric
+  cultivos : varchar
+  estado_eudr : varchar
+}
+
+entity "certificado" as certificado {
+  * id : UUID <<PK>>
+  --
+  finca_id : UUID <<FK>>
+  tipo : varchar
+  archivo_url : varchar
+  fecha_vigencia : date
+  estado_validacion : varchar
+}
+
+entity "perfil_vendedor" as perfil {
+  * id : UUID <<PK>>
+  --
+  vendedor_id : UUID <<FK, UNIQUE>>
+  capacidad_produccion : numeric
+  tipo_producto : varchar
+  variedad : varchar
+  calidad_comprometida : varchar
+}
+
+entity "lote" as lote {
+  * id : UUID <<PK>>
+  --
+  vendedor_id : UUID <<FK>>
+  producto : varchar
+  origen : varchar
+  cantidad_kg : numeric
+  precio : numeric
+  modalidad_precio : varchar
+  estado : varchar
+  publicado_en : timestamp
+}
+
+entity "negociacion" as negociacion {
+  * id : UUID <<PK>>
+  --
+  lote_id : UUID <<FK>>
+  comprador_id : UUID <<FK>>
+  estado : varchar
+  iniciada_en : timestamp
+}
+
+entity "mensaje" as mensaje {
+  * id : UUID <<PK>>
+  --
+  negociacion_id : UUID <<FK>>
+  emisor_id : UUID <<FK>>
+  texto : text
+  enviado_en : timestamp
+}
+
+entity "transaccion" as transaccion {
+  * id : UUID <<PK>>
+  --
+  negociacion_id : UUID <<FK, UNIQUE>>
+  comprador_id : UUID <<FK>>
+  vendedor_id : UUID <<FK>>
+  precio_acordado : numeric
+  comision : numeric
+  estado : varchar
+  inmutable : boolean
+  acordada_en : timestamp
+}
+
+entity "escrow" as escrow {
+  * id : UUID <<PK>>
+  --
+  transaccion_id : UUID <<FK, UNIQUE>>
+  monto : numeric
+  estado : varchar
+  fecha_liberacion : timestamp
+}
+
+entity "muestra" as muestra {
+  * id : UUID <<PK>>
+  --
+  transaccion_id : UUID <<FK>>
+  registrada_por : UUID <<FK>>
+  registrada_en : timestamp
+}
+
+entity "verificacion_calidad" as verif {
+  * id : UUID <<PK>>
+  --
+  muestra_id : UUID <<FK, UNIQUE>>
+  parametros : text
+  veredicto : varchar
+  verificado_en : timestamp
+}
+
+entity "disputa" as disputa {
+  * id : UUID <<PK>>
+  --
+  transaccion_id : UUID <<FK>>
+  motivo : text
+  estado : varchar
+  resolucion : text
+}
+
+entity "envio" as envio {
+  * id : UUID <<PK>>
+  --
+  transaccion_id : UUID <<FK, UNIQUE>>
+  transportador_id : UUID <<FK>>
+  estado : varchar
+  creado_en : timestamp
+}
+
+entity "evento_envio" as evento {
+  * id : UUID <<PK>>
+  --
+  envio_id : UUID <<FK>>
+  estado : varchar
+  fecha : timestamp
+  observacion : varchar
+}
+
+entity "auditoria" as auditoria {
+  * id : UUID <<PK>>
+  --
+  usuario_id : UUID <<FK>>
+  accion : varchar
+  fecha : timestamp
+}
+
+usuario ||--o{ finca
+finca ||--o{ certificado
+usuario ||--o| perfil
+usuario ||--o{ lote
+lote ||--o{ negociacion
+negociacion ||--o{ mensaje
+negociacion ||--o| transaccion
+transaccion ||--|| escrow
+transaccion ||--o{ muestra
+muestra ||--o| verif
+transaccion ||--o{ disputa
+transaccion ||--|| envio
+envio ||--o{ evento
+usuario ||--o{ auditoria
+@enduml
