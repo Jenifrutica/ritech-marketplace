@@ -8,9 +8,15 @@ Plataforma web que actúa como **intermediario digital** entre productores colom
 
 | Rol | Persona |
 | --- | --- |
-| Developers | Jenifer Urbano y Juan Camilo Lopez |
-| Scrum Master | Nicolas Diaz |
+| Developers | Jenifer Daniela Urbano y Juan Camilo Lopez |
+| Scrum Master | Nicolas Alejandro Diaz |
 | Product Owner | Aida Liliana Rosero |
+
+## Entregas
+
+- **[Sprint 2 — Entrega](https://github.com/Jenifrutica/ritech-marketplace/wiki/Sprint-2-Entrega)** (wiki): requerimientos, UML, backlog de septiembre, épicas/historias y base de datos.
+- Archivos: [`deliverables/sprint-2/`](deliverables/sprint-2/) — documento (A), plan de pruebas (B) y presentación (C).
+- Diagramas 4+1 + ER en PlantUML/PNG: [`deliverables/sprint-2/diagramas/`](deliverables/sprint-2/diagramas/).
 
 ## Documentación
 
