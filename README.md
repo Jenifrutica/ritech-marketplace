@@ -14,7 +14,9 @@ Plataforma web que actúa como **intermediario digital** entre productores colom
 
 ## Entregas
 
-- Archivos: [`deliverables/sprint-2/`](deliverables/sprint-2/) — documento (A), plan de pruebas (B) y presentación (C).
+- **A. Documentación:** [Wiki](https://github.com/Jenifrutica/ritech-marketplace/wiki/Home) · portada en [`deliverables/sprint-2/`](deliverables/sprint-2/).
+- **B. Plan de pruebas:** [`deliverables/sprint-2/Entregable-B-Plan-de-Pruebas-Sprint2.xlsx`](deliverables/sprint-2/Entregable-B-Plan-de-Pruebas-Sprint2.xlsx).
+- **C. Código y demostración:** este mismo repositorio.
 - Diagramas 4+1 + ER en PlantUML/PNG: [`deliverables/sprint-2/diagramas/`](deliverables/sprint-2/diagramas/).
 
 ## Documentación
