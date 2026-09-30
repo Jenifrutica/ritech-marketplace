@@ -1,0 +1,62 @@
+@startuml
+!pragma layout smetana
+top to bottom direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+skinparam component {
+  BackgroundColor #EAF2FB
+  BorderColor #2C5AA0
+}
+
+package "presentación — React SPA" as PRES {
+  component "Vistas y componentes\n(comprador, vendedor, admin)" as v1
+}
+
+package "controller / api — DRF ViewSets" as CTRL {
+  component "UsuariosViewSet" as c1
+  component "FincasViewSet" as c2
+  component "LotesViewSet" as c3
+  component "TransaccionesViewSet" as c4
+  component "CalidadViewSet" as c5
+  component "LogisticaViewSet" as c6
+  component "AdminViewSet" as c7
+}
+
+package "dto / serializers — transferencia" as DTO {
+  component "Request / Response DTO" as d1
+  component "Serializers (validación)" as d2
+}
+
+package "service — reglas de negocio" as SVC {
+  component "UsuarioService" as s1
+  component "FincaService" as s2
+  component "MarketplaceService" as s3
+  component "TransaccionService\n(escrow, comisión, inmutabilidad)" as s4
+  component "CalidadService" as s5
+  component "LogisticaService" as s6
+  component "AdminService" as s7
+}
+
+package "repository — Django ORM" as REPO {
+  component "Repositorios\n(QuerySets / managers)" as r1
+}
+
+package "domain / model — entidades" as DOM {
+  component "Entidades y enums\n(Usuario, Finca, Lote,\nTransacción, Escrow, ...)" as dom1
+}
+
+package "infraestructura" as INFRA {
+  component "PostgreSQL + PostGIS" as i1
+  component "S3 (documentos y PDF)" as i2
+  component "Generador de PDF" as i3
+}
+
+PRES ..> CTRL : HTTP / REST (JSON)
+CTRL --> DTO : usa
+DTO --> SVC : invoca
+SVC --> REPO : consulta / persiste
+REPO --> DOM : mapea
+SVC --> DOM : aplica reglas
+SVC --> INFRA : usa
+@enduml

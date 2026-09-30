@@ -1,0 +1,219 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor #FDFDFD
+  BorderColor #2C5AA0
+  HeaderBackgroundColor #DCE8F7
+}
+skinparam enum {
+  BackgroundColor #FFF8E1
+  BorderColor #B8860B
+}
+
+abstract class Usuario {
+  - id : UUID
+  - email : string
+  - passwordHash : string
+  - nombre : string
+  - identificacion : string
+  - firma : string
+  - rol : Rol
+  - estado : EstadoUsuario
+  - fechaRegistro : datetime
+  + autenticar(password) : bool
+  + tienePermiso(accion) : bool
+  + bloquear(motivo) : void
+}
+
+class Comprador
+class Vendedor {
+  - capacidadProduccion : decimal
+  - tipoProducto : TipoProducto
+  - variedad : string
+  - calidadComprometida : string
+}
+class Propietario
+class Administrador {
+  - nivel : string
+}
+class AdministradorTecnico
+class Transportador {
+  - empresa : string
+}
+
+class Finca {
+  - id : UUID
+  - nombre : string
+  - ubicacion : geometry(Polygon, 4326)
+  - areaHa : decimal
+  - cultivos : string
+  - estadoEudr : EstadoEUDR
+}
+class Certificado {
+  - id : UUID
+  - tipo : TipoCertificado
+  - archivoUrl : string
+  - fechaVigencia : date
+  - estadoValidacion : string
+}
+class PerfilVendedor {
+  - id : UUID
+  - capacidadProduccion : decimal
+  - tipoProducto : TipoProducto
+  - variedad : string
+  - calidadComprometida : string
+}
+class Lote {
+  - id : UUID
+  - producto : TipoProducto
+  - origen : string
+  - cantidadKg : decimal
+  - precio : decimal
+  - modalidadPrecio : ModalidadPrecio
+  - estado : EstadoLote
+  - publicadoEn : datetime
+}
+class Negociacion {
+  - id : UUID
+  - estado : string
+  - iniciadaEn : datetime
+}
+class Mensaje {
+  - id : UUID
+  - texto : string
+  - enviadoEn : datetime
+}
+class Transaccion {
+  - id : UUID
+  - precioAcordado : decimal
+  - comision : decimal
+  - estado : EstadoTransaccion
+  - inmutable : bool
+  - acordadaEn : datetime
+}
+class Escrow {
+  - id : UUID
+  - monto : decimal
+  - estado : EstadoEscrow
+  - fechaLiberacion : datetime
+}
+class Muestra {
+  - id : UUID
+  - registradaEn : datetime
+}
+class VerificacionCalidad {
+  - id : UUID
+  - parametros : string
+  - veredicto : Veredicto
+  - verificadoEn : datetime
+}
+class Disputa {
+  - id : UUID
+  - motivo : string
+  - estado : EstadoDisputa
+  - resolucion : string
+}
+class Envio {
+  - id : UUID
+  - estado : EstadoEnvio
+  - creadoEn : datetime
+}
+class EventoEnvio {
+  - id : UUID
+  - estado : EstadoEnvio
+  - fecha : datetime
+  - observacion : string
+}
+class Auditoria {
+  - id : UUID
+  - accion : string
+  - fecha : datetime
+}
+
+enum Rol {
+  COMPRADOR
+  VENDEDOR
+  PROPIETARIO
+  ADMIN_SISTEMA
+  ADMIN_TECH
+  LOGISTICO
+}
+enum EstadoUsuario {
+  ACTIVO
+  BLOQUEADO
+}
+enum TipoProducto {
+  CAFE
+  CACAO
+}
+enum EstadoEUDR {
+  HABILITADA
+  BLOQUEADA
+}
+enum TipoCertificado {
+  ORIGEN_NARINO
+  NO_DEFORESTACION
+  ORGANICO
+}
+enum ModalidadPrecio {
+  FIJO
+  A_ACORDAR
+}
+enum EstadoLote {
+  PUBLICADO
+  NEGOCIANDO
+  VENDIDO
+}
+enum EstadoTransaccion {
+  ACORDADA
+  PAGO_BLOQUEADO
+  VERIFICANDO_CALIDAD
+  COMPLETADA
+  EN_DISPUTA
+}
+enum EstadoEscrow {
+  BLOQUEADO
+  LIBERADO
+  DEVUELTO
+}
+enum Veredicto {
+  ACEPTA
+  RECHAZA
+}
+enum EstadoDisputa {
+  ABIERTA
+  EN_REVISION
+  RESUELTA
+}
+enum EstadoEnvio {
+  PREPARADO
+  ENVIADO
+  EN_TRANSITO
+  ENTREGADO
+}
+
+Usuario <|-- Comprador
+Usuario <|-- Vendedor
+Usuario <|-- Propietario
+Usuario <|-- Administrador
+Administrador <|-- AdministradorTecnico
+Usuario <|-- Transportador
+
+Usuario "1" -- "0..*" Finca : posee >
+Finca "1" -- "0..*" Certificado : respalda >
+Usuario "1" -- "0..1" PerfilVendedor : tiene >
+Vendedor "1" -- "0..*" Lote : publica >
+Lote "1" -- "0..*" Negociacion : genera >
+Negociacion "1" -- "0..*" Mensaje : contiene >
+Negociacion "1" -- "0..1" Transaccion : concluye >
+Transaccion "1" -- "1" Escrow : bloquea >
+Transaccion "1" -- "0..1" Muestra : registra >
+Muestra "1" -- "0..1" VerificacionCalidad : evaluada >
+Transaccion "1" -- "0..*" Disputa : abre >
+Transaccion "1" -- "1" Envio : despacha >
+Envio "1" -- "0..*" EventoEnvio : registra >
+Usuario "1" -- "0..*" Auditoria : genera >
+@enduml
