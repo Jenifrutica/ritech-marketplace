@@ -22,6 +22,8 @@ Plataforma web que actúa como **intermediario digital** entre productores colom
 La documentación vive en la **[Wiki](https://github.com/Jenifrutica/ritech-marketplace/wiki)** del repositorio:
 
 - [Inicio](https://github.com/Jenifrutica/ritech-marketplace/wiki/Home)
+- [Requisitos](https://github.com/Jenifrutica/ritech-marketplace/wiki/Requisitos) (incluye ISO/IEC 25010)
+- [Arquitectura](https://github.com/Jenifrutica/ritech-marketplace/wiki/Arquitectura)
 - [Product Backlog (Jira LIT)](https://github.com/Jenifrutica/ritech-marketplace/wiki/Product-Backlog-Jira-LIT)
 - [Sprints y metodología ágil](https://github.com/Jenifrutica/ritech-marketplace/wiki/Sprints-y-metodologia-agil)
 - [Diagramas](https://github.com/Jenifrutica/ritech-marketplace/wiki/Diagramas)
