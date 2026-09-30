@@ -462,7 +462,9 @@ function useIconFeedback(host:React.RefObject<SVGSVGElement|null>, enabled:boole
 }
 
 export function iconClassName(size:IconProps["size"]="default",className?:string){return cn("v-icon [width:var(--icon-md)] [height:var(--icon-md)] [stroke:currentColor] [stroke-width:var(--icon-stroke)] [stroke-linecap:round] [stroke-linejoin:round] [fill:none] [flex:none]",size!=="default"&&`-${size}`,className)}
-export function Icon({name,size="default",className,draw,feedback=true,treatment="outline",tone="current",feedbackDuration,feedbackEase,style,strokeWidth,ref,...props}:IconProps){
+// RiTech: feedback desactivado por defecto; en la navegación las micro-animaciones al
+// pasar el mouse se percibían como parpadeo. Se puede activar por ícono con feedback.
+export function Icon({name,size="default",className,draw,feedback=false,treatment="outline",tone="current",feedbackDuration,feedbackEase,style,strokeWidth,ref,...props}:IconProps){
   const {quiet}=useChoreography();
   const host=React.useRef<SVGSVGElement|null>(null);
   const attach=React.useCallback((node:SVGSVGElement|null)=>{host.current=node;const release=assignMotionRef(ref,node);return()=>{host.current=null;release()}},[ref]);

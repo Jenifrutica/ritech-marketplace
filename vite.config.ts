@@ -7,6 +7,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: './',
   plugins: [react(), tailwindcss()],
+  // Permite compartir el servidor de desarrollo por un túnel rápido de Cloudflare.
+  server: { allowedHosts: ['.trycloudflare.com'] },
   resolve: {
     alias: { '@': path.resolve(import.meta.dirname, './src') },
   },
