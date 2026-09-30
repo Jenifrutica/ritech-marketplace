@@ -1,0 +1,443 @@
+[
+ {
+  "key": "LIT-57",
+  "tipo": "Epic",
+  "resumen": "M1 - Usuarios y seguridad",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Registro/login por roles, verificación de identidad, permisos de información privada y bloqueo de usuarios por fraude. Sprint 1.",
+  "criterios": [
+   "Todos los roles pueden autenticarse y solo acceden a sus funciones.",
+   "La identidad se verifica y los usuarios fraudulentos se bloquean.",
+   "La información privada nunca se expone entre usuarios."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-58",
+  "tipo": "Epic",
+  "resumen": "M2 - Fincas y trazabilidad EUDR",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Registro de fincas con geolocalización, carga de certificados (origen Nariño, no deforestación), estado EUDR y perfil del vendedor. Sprint 2.",
+  "criterios": [
+   "La finca se registra con geolocalización y área.",
+   "Los certificados se cargan con vigencia y validación.",
+   "El estado EUDR se calcula y bloquea fincas sin certificados vigentes."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-59",
+  "tipo": "Epic",
+  "resumen": "M3 - Marketplace",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Publicación de lotes (mín. 100 kg), búsqueda/filtros, chat de negociación y acuerdo de venta inmutable. Sprint 3.",
+  "criterios": [
+   "Se publican lotes con cantidad ≥ 100 kg y precio válido.",
+   "El comprador busca, filtra y negocia por chat.",
+   "El acuerdo genera una transacción inmutable."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-60",
+  "tipo": "Epic",
+  "resumen": "M4 - Transacciones y escrow",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Dinero bloqueado hasta aceptación del comprador, cálculo de comisiones (1% con valor mínimo) y gestión de disputas. Sprint 4.",
+  "criterios": [
+   "El dinero se bloquea y solo se libera al aceptar el producto.",
+   "La comisión del 1% con mínimo se calcula correctamente.",
+   "Las disputas se gestionan por el administrador."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-61",
+  "tipo": "Epic",
+  "resumen": "M5 - Calidad",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Muestra vs. producto recibido, parámetros de calidad con el laboratorio de café de la universidad, veredicto del comprador que libera el pago. Sprint 5.",
+  "criterios": [
+   "La muestra se registra y se compara con el producto recibido.",
+   "El veredicto del comprador libera o retiene el pago."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-62",
+  "tipo": "Epic",
+  "resumen": "M6 - Logística (tracker)",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Rol transportador y tracker de estados del pedido (preparado → enviado → en tránsito → entregado). Sin implementación logística real en la primera entrega. Sprint 5.",
+  "criterios": [
+   "El transportador actualiza los estados del pedido.",
+   "El tracker es visible para comprador y vendedor."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-63",
+  "tipo": "Epic",
+  "resumen": "M7 - Administración",
+  "epica": null,
+  "sprint": null,
+  "descripcion": "Panel del administrador del sistema (usuarios, disputas, bloqueos, comisiones) y panel del administrador técnico (auditoría, respaldos). Sprint 6.",
+  "criterios": [
+   "El admin del sistema gestiona usuarios, disputas y comisiones.",
+   "El admin técnico audita y respalda.",
+   "La plataforma se despliega en AWS y cumple los RNF."
+  ],
+  "responsable": null,
+  "septiembre": false
+ },
+ {
+  "key": "LIT-64",
+  "tipo": "Historia",
+  "resumen": "Registro y login de usuarios por rol",
+  "epica": "LIT-57",
+  "sprint": "sprint-1",
+  "descripcion": "Como usuario quiero registrarme e iniciar sesión con mi rol (comprador, vendedor, propietario de finca, administrador, logístico/transportador) para acceder a las funciones que me corresponden. RN-5: los datos de registro (nombre, identificación, firma) se ingresan una sola vez.",
+  "criterios": [
+   "El usuario se registra con nombre, identificación, email y firma una sola vez (RN-5).",
+   "El login valida credenciales y devuelve acceso según el rol.",
+   "Un usuario no puede ejecutar funciones fuera de su rol (RN-13)."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-65",
+  "tipo": "Historia",
+  "resumen": "Verificación de identidad de usuarios",
+  "epica": "LIT-57",
+  "sprint": "sprint-1",
+  "descripcion": "Como administrador quiero verificar la identidad de los usuarios (cédula/NIT, documentos) para garantizar que son reales antes de operar en la plataforma.",
+  "criterios": [
+   "El sistema valida identificación y firma antes de habilitar operaciones.",
+   "Un usuario no verificado no puede publicar lotes ni comprar."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-66",
+  "tipo": "Historia",
+  "resumen": "Privacidad de información entre usuarios",
+  "epica": "LIT-57",
+  "sprint": "sprint-1",
+  "descripcion": "Como usuario quiero que la información privada de otros usuarios (ubicación, fincas) no sea visible para proteger la privacidad hasta que exista una negociación (RN-13).",
+  "criterios": [
+   "La ubicación y datos de fincas permanecen ocultos hasta una negociación activa (RN-13).",
+   "Ningún endpoint expone datos privados de otro usuario."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-67",
+  "tipo": "Historia",
+  "resumen": "Bloqueo y baneo de usuarios por fraude",
+  "epica": "LIT-57",
+  "sprint": "sprint-1",
+  "descripcion": "Como administrador quiero bloquear/banear usuarios por intentos de fraude y recibir reportes para proteger la plataforma (RN-12).",
+  "criterios": [
+   "El administrador puede bloquear y desbloquear usuarios (RN-12).",
+   "Un usuario bloqueado no puede iniciar sesión ni operar."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-68",
+  "tipo": "Historia",
+  "resumen": "Registro de fincas con geolocalización",
+  "epica": "LIT-58",
+  "sprint": "sprint-2",
+  "descripcion": "Como propietario de finca quiero registrar mi finca con geolocalización (polígonos) para identificar su ubicación y cumplir con EUDR.",
+  "criterios": [
+   "El propietario registra la finca con polígono (PostGIS) y área.",
+   "El sistema valida que el origen sea Nariño/Colombia (RN-2, RN-10)."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-69",
+  "tipo": "Historia",
+  "resumen": "Carga de certificados de la finca",
+  "epica": "LIT-58",
+  "sprint": "sprint-2",
+  "descripcion": "Como propietario de finca quiero subir mis certificados (origen Nariño, no deforestación, orgánico) en un espacio dedicado de la app para demostrar cumplimiento (RN-2, RN-3).",
+  "criterios": [
+   "Se cargan certificados de origen Nariño, no deforestación y orgánico con archivo y vigencia (RN-3).",
+   "Un certificado vencido marca la finca como bloqueada."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-70",
+  "tipo": "Historia",
+  "resumen": "Estado de cumplimiento EUDR por finca",
+  "epica": "LIT-58",
+  "sprint": "sprint-2",
+  "descripcion": "Como sistema quiero mantener el estado de cumplimiento EUDR por finca (habilitada/bloqueada para exportar) según sus certificados vigentes.",
+  "criterios": [
+   "La finca muestra estado HABILITADA o BLOQUEADA según sus certificados vigentes.",
+   "Una finca bloqueada no puede publicar lotes."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-71",
+  "tipo": "Historia",
+  "resumen": "Perfil del vendedor",
+  "epica": "LIT-58",
+  "sprint": "sprint-2",
+  "descripcion": "Como vendedor quiero registrar mi perfil (capacidad de producción, tipo de café/cacao, variedad, calidad que me comprometo a entregar) para que los compradores me conozcan.",
+  "criterios": [
+   "El vendedor registra capacidad de producción, tipo de producto, variedad y calidad comprometida.",
+   "El perfil se reutiliza en cada publicación."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": true
+ },
+ {
+  "key": "LIT-72",
+  "tipo": "Historia",
+  "resumen": "Publicación de lotes de café/cacao",
+  "epica": "LIT-59",
+  "sprint": "sprint-3",
+  "descripcion": "Como vendedor quiero publicar lotes con origen, cantidad (mínimo 100 kg) y precio fijo o negociable para que los compradores los vean (RN-1, RN-4).",
+  "criterios": [
+   "La cantidad mínima del lote es de 100 kg (RN-1).",
+   "El precio puede ser fijo o 'a acordar' (RN-4).",
+   "Solo vendedores con finca y certificados válidos pueden publicar."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-73",
+  "tipo": "Historia",
+  "resumen": "Búsqueda y filtros de lotes para compradores",
+  "epica": "LIT-59",
+  "sprint": "sprint-3",
+  "descripcion": "Como comprador quiero buscar y filtrar lotes (producto, origen, cantidad, precio) para encontrar lo que necesito.",
+  "criterios": [
+   "El comprador filtra por producto, origen, cantidad y precio.",
+   "Los resultados ocultan los datos privados del vendedor."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-74",
+  "tipo": "Historia",
+  "resumen": "Chat de negociación comprador-vendedor",
+  "epica": "LIT-59",
+  "sprint": "sprint-3",
+  "descripcion": "Como comprador/vendedor quiero un chat interno para negociar los términos de la venta (precio, cantidad, condiciones de entrega).",
+  "criterios": [
+   "Los mensajes se intercambian dentro de una negociación.",
+   "La información privada se revela solo dentro de la negociación activa."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-75",
+  "tipo": "Historia",
+  "resumen": "Transacción de venta inmutable",
+  "epica": "LIT-59",
+  "sprint": "sprint-3",
+  "descripcion": "Como sistema quiero registrar la transacción inmutable una vez acordada la venta: no se puede modificar nada después del acuerdo (RN-6).",
+  "criterios": [
+   "Al acordar, se crea la transacción y no admite modificaciones (RN-6).",
+   "Cualquier cambio posterior pasa por disputa."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-76",
+  "tipo": "Historia",
+  "resumen": "Dinero bloqueado (escrow) hasta aceptación",
+  "epica": "LIT-60",
+  "sprint": "sprint-4",
+  "descripcion": "Como sistema quiero bloquear el dinero (escrow) al acordar la venta y liberarlo solo cuando el comprador acepte el producto (RN-7).",
+  "criterios": [
+   "El dinero se bloquea y solo se libera al aceptar el producto (RN-7).",
+   "El escrow maneja los estados BLOQUEADO, LIBERADO y DEVUELTO."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-77",
+  "tipo": "Historia",
+  "resumen": "Cálculo de comisiones (1% con valor mínimo)",
+  "epica": "LIT-60",
+  "sprint": "sprint-4",
+  "descripcion": "Como sistema quiero calcular la comisión del 1% con valor mínimo en cada compra, aplicable a comprador y vendedor (RN-11).",
+  "criterios": [
+   "La comisión del 1% con valor mínimo se calcula para comprador y vendedor (RN-11).",
+   "El cálculo es exacto y visible en la transacción."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-78",
+  "tipo": "Historia",
+  "resumen": "Gestión de disputas",
+  "epica": "LIT-60",
+  "sprint": "sprint-4",
+  "descripcion": "Como administrador quiero gestionar disputas cuando el comprador no acepta el producto o hay incumplimiento.",
+  "criterios": [
+   "El administrador gestiona la disputa con motivo, estado y resolución.",
+   "Una disputa abierta congela la liberación del pago."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-79",
+  "tipo": "Historia",
+  "resumen": "Registro de muestra del producto",
+  "epica": "LIT-61",
+  "sprint": "sprint-5",
+  "descripcion": "Como propietario de finca quiero registrar la muestra del producto que se envía al comprador para el control de calidad (RN-8).",
+  "criterios": [
+   "El propietario/vendedor registra la muestra del producto (RN-8).",
+   "La muestra queda asociada a la transacción."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-80",
+  "tipo": "Historia",
+  "resumen": "Verificación de calidad muestra vs. producto recibido",
+  "epica": "LIT-61",
+  "sprint": "sprint-5",
+  "descripcion": "Como comprador quiero verificar que el producto recibido corresponde a la muestra, usando parámetros de calidad definidos con el laboratorio de café de la universidad (RN-8, RN-9).",
+  "criterios": [
+   "El comprador compara el producto recibido con la muestra.",
+   "Se usan los parámetros definidos por el laboratorio de café (RN-9)."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-81",
+  "tipo": "Historia",
+  "resumen": "Veredicto del comprador libera el pago",
+  "epica": "LIT-61",
+  "sprint": "sprint-5",
+  "descripcion": "Como comprador quiero que mi veredicto (acepto/rechazo) libere o retenga el pago al vendedor (RN-7, RN-8).",
+  "criterios": [
+   "Si el comprador acepta, se libera el escrow al vendedor.",
+   "Si rechaza, se abre una disputa."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-82",
+  "tipo": "Historia",
+  "resumen": "Actualización de estados del pedido por el transportador",
+  "epica": "LIT-62",
+  "sprint": "sprint-5",
+  "descripcion": "Como logístico/transportador quiero actualizar el estado del pedido (preparado → enviado → en tránsito → entregado). Sin implementación logística real en la primera entrega (RN-14).",
+  "criterios": [
+   "El transportador actualiza los estados (preparado → enviado → en tránsito → entregado) (RN-14).",
+   "Cada cambio registra fecha y observación."
+  ],
+  "responsable": "Jenifer Urbano",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-83",
+  "tipo": "Historia",
+  "resumen": "Tracker del pedido visible para comprador y vendedor",
+  "epica": "LIT-62",
+  "sprint": "sprint-5",
+  "descripcion": "Como comprador/vendedor quiero ver el tracker del pedido con su estado actual y su historial.",
+  "criterios": [
+   "Comprador y vendedor ven el historial de estados del pedido.",
+   "El tracker solo muestra pedidos de la propia transacción."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-84",
+  "tipo": "Historia",
+  "resumen": "Panel del administrador del sistema",
+  "epica": "LIT-63",
+  "sprint": "sprint-6",
+  "descripcion": "Como administrador del sistema quiero un panel para gestionar usuarios, disputas, bloqueos y comisiones.",
+  "criterios": [
+   "El admin gestiona usuarios, disputas, bloqueos y comisiones.",
+   "Toda acción administrativa queda registrada."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-85",
+  "tipo": "Historia",
+  "resumen": "Panel del administrador técnico (auditoría y respaldos)",
+  "epica": "LIT-63",
+  "sprint": "sprint-6",
+  "descripcion": "Como administrador técnico quiero un panel de auditoría y respaldos del sistema.",
+  "criterios": [
+   "El admin técnico consulta la auditoría de acciones.",
+   "Puede verificar el estado de los respaldos en AWS."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-86",
+  "tipo": "Historia",
+  "resumen": "Despliegue de la plataforma en AWS",
+  "epica": "LIT-63",
+  "sprint": "sprint-6",
+  "descripcion": "Como equipo queremos desplegar la plataforma en AWS para tener las releases mensuales disponibles en línea: S3 + CloudFront para el frontend React, Elastic Beanstalk para el backend Django, RDS PostgreSQL + PostGIS como base de datos y CloudWatch para logs y monitoreo.",
+  "criterios": [
+   "El frontend React se sirve desde S3 + CloudFront.",
+   "El backend Django corre en Elastic Beanstalk con RDS PostgreSQL + PostGIS."
+  ],
+  "responsable": "Juan Camilo Lopez",
+  "septiembre": false
+ },
+ {
+  "key": "LIT-87",
+  "tipo": "Tarea",
+  "resumen": "Requisitos no funcionales de la plataforma",
+  "epica": "LIT-63",
+  "sprint": "sprint-6",
+  "descripcion": "Como equipo queremos verificar que la plataforma cumpla los requisitos no funcionales antes de cada release: exactitud funcional en cálculos de comisiones y pesos, usabilidad con protección contra errores de captura, fiabilidad e integridad (transacción inmutable y durable), mantenibilidad por módulos, seguridad de documentos y datos privados, y respaldo automático en la nube (AWS).",
+  "criterios": [
+   "Se verifican los RNF (exactitud, usabilidad, fiabilidad, mantenibilidad, seguridad y respaldo) antes de cada release.",
+   "Los resultados quedan registrados en el plan de pruebas."
+  ],
+  "responsable": "Nicolas Diaz",
+  "septiembre": false
+ }
+]
