@@ -96,4 +96,4 @@ Fotografías libres de Wikimedia Commons en `public/images`, con autor y licenci
 
 ---
 
-*Migrado desde Confluence (space LA) a GitHub.*
+*Migrado desde Confluence (space LA) a GitHub. :)*
