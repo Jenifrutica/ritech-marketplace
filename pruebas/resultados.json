@@ -1,0 +1,142 @@
+{
+  "MK-007": {
+    "obtenido": "99 kg → \"min\"; 100 kg → null; 150 kg → null",
+    "pasa": true
+  },
+  "MK-008": {
+    "obtenido": "vacío → \"required\"; NaN → \"required\"; 600 con máx. 500 → \"exceeds\"; 500 con máx. 500 → null",
+    "pasa": true
+  },
+  "TX-006": {
+    "obtenido": "commission(10000) = 100 €",
+    "pasa": true
+  },
+  "TX-007": {
+    "obtenido": "1000 € → 25 €; 2500 € → 25 €; 3000 € → 30 €",
+    "pasa": true
+  },
+  "TX-008": {
+    "obtenido": "subtotal 4080; comisión c/u 40.800000000000004; comprador paga 4120.8; vendedor recibe 4039.2; plataforma 81.60000000000001",
+    "pasa": true
+  },
+  "LG-003": {
+    "obtenido": "sample → prepared → shipped → in_transit → delivered → null",
+    "pasa": true
+  },
+  "LG-004": {
+    "obtenido": "agreed → null; accepted → null; disputed → null; resolved → null",
+    "pasa": true
+  },
+  "RNF-005": {
+    "obtenido": "475 claves en ES, 475 en EN; faltan en EN: 0; sobran: 0; vacías: 0",
+    "pasa": true
+  },
+  "MK-009": {
+    "obtenido": "Lote NAR-2410 (published); lotes 9 → 10; auditoría \"publish\" por u-seller",
+    "pasa": true
+  },
+  "MK-010": {
+    "obtenido": "Negociación open; oferta inicial 7 €/kg × 300 kg; lote pasa a \"negotiating\"",
+    "pasa": true
+  },
+  "MK-011": {
+    "obtenido": "3 mensajes en orden: u-buyer, u-seller, u-buyer",
+    "pasa": true
+  },
+  "MK-012": {
+    "obtenido": "Transacción TX-0959: 300 kg a 6.5 €/kg, etapa \"agreed\", escrow \"held\"; negociación \"agreed\"; lote \"sold\"",
+    "pasa": true
+  },
+  "MK-013": {
+    "obtenido": "Tras intentar cambiar la oferta a 1 €/kg × 100 kg: transacción sigue en 6.5 €/kg × 300 kg; segunda transacción creada: no",
+    "pasa": true
+  },
+  "TX-009": {
+    "obtenido": "Escrow \"held\" desde el acuerdo; comprador deja bloqueado 1975 € (subtotal 1950 + comisión 25)",
+    "pasa": true
+  },
+  "CL-005": {
+    "obtenido": "Muestra M-TEST-01 asociada, etapa \"sample\"; segundo registro deja la muestra en M-TEST-01",
+    "pasa": true
+  },
+  "LG-005": {
+    "obtenido": "Sin muestra se queda en \"agreed\"; con muestra y 6 avances: agreed → sample → prepared → shipped → in_transit → delivered",
+    "pasa": true
+  },
+  "CL-006": {
+    "obtenido": "Etapa \"accepted\", escrow \"released\"",
+    "pasa": true
+  },
+  "CL-007": {
+    "obtenido": "Aceptar antes de la entrega: etapa \"sample\", escrow \"held\"",
+    "pasa": true
+  },
+  "CL-008": {
+    "obtenido": "Etapa \"disputed\", escrow \"held\", disputa \"open\" con motivo \"Humedad fuera de rango\"",
+    "pasa": true
+  },
+  "TX-010": {
+    "obtenido": "Liberar → escrow \"released\" (resolved); reembolsar → \"refunded\" (resolved); resolver de nuevo → \"refunded\"",
+    "pasa": true
+  },
+  "FN-007": {
+    "obtenido": "Finca \"Finca Prueba\" creada con 3 vértices, 3.5 ha, estado EUDR \"pending\"",
+    "pasa": true
+  },
+  "FN-008": {
+    "obtenido": "Con certificados cargados sin validar: \"pending\"; tras validar origen y no deforestación: \"enabled\"",
+    "pasa": true
+  },
+  "FN-009": {
+    "obtenido": "Origen validado + no deforestación rechazado → EUDR \"pending\"",
+    "pasa": true
+  },
+  "FN-010": {
+    "obtenido": "Certificados vencidos (31/01/2026 y 31/03/2026) validados → EUDR \"enabled\"; la función recomputeEudr no consulta validUntil",
+    "pasa": false
+  },
+  "QA-007": {
+    "obtenido": "Bloquear → \"blocked\" (auditoría \"block\"); desbloquear → \"active\" (auditoría \"unblock\")",
+    "pasa": true
+  },
+  "QA-008": {
+    "obtenido": "u-buyer4 verificado: false → true; auditoría \"verify\"",
+    "pasa": true
+  },
+  "AD-003": {
+    "obtenido": "Último respaldo 28/09/2026 17:40 → 29/09/26, 10:55 p. m. (hora local); auditoría \"backup\" sobre rds-ritech-prod por u-tech",
+    "pasa": true
+  },
+  "AD-004": {
+    "obtenido": "Acciones registradas: seller:publish, admin:block, tech:backup; usuarios: u-seller, u-admin, u-tech; entradas nuevas 3",
+    "pasa": true
+  },
+  "AD-005": {
+    "obtenido": "Tras reset: datos iguales a la semilla = true; rol conservado = admin",
+    "pasa": true
+  },
+  "QA-009": {
+    "obtenido": "9 tarjetas renderizadas; ninguna muestra nombre de finca, municipio, altitud ni coordenadas; control positivo detectado: sí",
+    "pasa": true
+  },
+  "RNF-006": {
+    "obtenido": "10 imágenes en public/images, 10 créditos; sin crédito: ninguna; créditos incompletos: ninguno",
+    "pasa": true
+  },
+  "DP-003": {
+    "obtenido": "tsc -b sin errores y vite build OK en 712ms; bundle JS 975.98 kB (298.33 kB gzip); Vite advierte que el bundle supera 500 kB (sin code-splitting)",
+    "pasa": true
+  },
+  "RNF-007": {
+    "obtenido": "oxlint terminó con código 0: 0 errores, 64 advertencias (58 en código de la librería src/components/ui y src/lib/cojeev, 6 en código propio)",
+    "pasa": true
+  },
+  "RNF-008": {
+    "obtenido": "36 combinaciones verificadas, 0 fallan; texto: mínimo 5.20:1 (exige 4.5:1); bordes/íconos: mínimo 3.90:1 (exige 3:1)",
+    "pasa": true
+  },
+  "RNF-009": {
+    "obtenido": "0 coincidencias de linear/radial/conic-gradient en src/",
+    "pasa": true
+  }
+}

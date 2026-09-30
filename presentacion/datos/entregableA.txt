@@ -1,0 +1,907 @@
+
+
+
+Proyecto RiTech SAS: Marketplace + Trazabilidad café/cacao a la UE
+
+Entrega Sprint 2 — Documento técnico
+
+Calidad de Software — equipo Las instancias Team
+30 de septiembre de 2026
+
+
+Integrante
+Rol
+Jenifer Daniela Urbano
+Developer
+Juan Camilo Lopez
+Developer
+Nicolas Alejandro Diaz
+Scrum Master
+Aida Liliana Rosero
+Product Owner
+
+1. Requerimientos
+1.1 Requerimientos funcionales
+Los requerimientos funcionales se derivan de las historias de usuario del product backlog (Jira LIT).
+ID
+Módulo
+Descripción
+Historia
+RF-01
+Usuarios y seguridad
+Registro y autenticación de usuarios por rol (comprador, vendedor, propietario, admin sistema, admin técnico, logístico).
+LIT-64
+RF-02
+Usuarios y seguridad
+Verificación de identidad del usuario a partir de identificación y firma registradas una sola vez.
+LIT-65
+RF-03
+Usuarios y seguridad
+Ocultar la información privada (ubicación, fincas) entre usuarios.
+LIT-66
+RF-04
+Usuarios y seguridad
+Bloqueo y baneo de usuarios ante intento de fraude por parte del administrador.
+LIT-67
+RF-05
+Fincas y EUDR
+Registro de fincas con geolocalización (polígono PostGIS) y área.
+LIT-68
+RF-06
+Fincas y EUDR
+Carga de certificados de la finca (origen Nariño, no deforestación, orgánico) con vigencia.
+LIT-69
+RF-07
+Fincas y EUDR
+Cálculo y visualización del estado de cumplimiento EUDR por finca (habilitada/bloqueada).
+LIT-70
+RF-08
+Fincas y EUDR
+Registro del perfil del vendedor (capacidad, tipo de producto, variedad, calidad comprometida).
+LIT-71
+RF-09
+Marketplace
+Publicación de lotes de café/cacao con cantidad mínima de 100 kg y precio fijo o a acordar.
+LIT-72
+RF-10
+Marketplace
+Búsqueda y filtros de lotes para compradores por producto, origen, cantidad y precio.
+LIT-73
+RF-11
+Marketplace
+Chat de negociación entre comprador y vendedor dentro de una negociación.
+LIT-74
+RF-12
+Marketplace
+Generación de una transacción de venta inmutable una vez acordada.
+LIT-75
+RF-13
+Transacciones
+Bloqueo de dinero (escrow) hasta la aceptación del producto por el comprador.
+LIT-76
+RF-14
+Transacciones
+Cálculo de comisiones del 1% con valor mínimo para comprador y vendedor.
+LIT-77
+RF-15
+Transacciones
+Gestión de disputas por parte del administrador.
+LIT-78
+RF-16
+Calidad
+Registro de la muestra del producto por parte del propietario/vendedor.
+LIT-79
+RF-17
+Calidad
+Verificación de calidad muestra vs. producto recibido con parámetros del laboratorio.
+LIT-80
+RF-18
+Calidad
+Veredicto del comprador que libera o retiene el pago.
+LIT-81
+RF-19
+Logística
+Actualización de estados del pedido por el transportador.
+LIT-82
+RF-20
+Logística
+Tracker del pedido visible para comprador y vendedor.
+LIT-83
+RF-21
+Administración
+Panel del administrador del sistema (usuarios, disputas, bloqueos, comisiones).
+LIT-84
+RF-22
+Administración
+Panel del administrador técnico (auditoría y respaldos).
+LIT-85
+RF-23
+Administración
+Despliegue de la plataforma en AWS.
+LIT-86
+RF-24
+Administración
+Verificación de los requisitos no funcionales antes de cada release.
+LIT-87
+1.2 Requerimientos no funcionales
+ID
+Atributo
+Descripción
+Verificación
+RNF-01
+Exactitud funcional
+Los cálculos de comisiones (1% con mínimo) y de pesos deben ser correctos.
+Verificación en cada release
+RNF-02
+Usabilidad
+Protección contra errores de captura de datos en formularios.
+Pruebas de límites
+RNF-03
+Fiabilidad e integridad
+La transacción de venta es inmutable y durable (RN-6).
+Pruebas de integridad
+RNF-04
+Mantenibilidad
+Código evolucionable por módulos, con arquitectura por capas.
+Revisión de código
+RNF-05
+Seguridad
+Protección de documentos y datos privados de los usuarios (RN-13).
+Pruebas de autorización
+RNF-06
+Respaldo
+Respaldo automático en la nube (AWS).
+Configuración de RDS/backups
+RNF-07
+Rendimiento
+Búsquedas y listados responden en tiempos aceptables para uso web.
+Pruebas de carga
+RNF-08
+Disponibilidad
+Releases mensuales desplegadas en línea sin interrupción prolongada.
+Despliegue AWS
+RNF-09
+Privacidad
+La ubicación y datos de fincas solo se revelan en negociación activa.
+Pruebas de privacidad
+RNF-10
+Internacionalización
+La plataforma debe soportar idiomas para compradores de la UE (pendiente).
+Revisión de i18n
+RNF-11
+Auditoría
+Registro de acciones para el administrador técnico.
+Panel admin técnico
+1.3 Restricciones
+Tipo
+Descripción
+Tecnológicas
+Base de datos PostgreSQL + PostGIS; backend Python + Django; frontend React; despliegue en AWS (S3+CloudFront, Elastic Beanstalk, RDS, CloudWatch).
+Regulatorias
+Cumplimiento EUDR (certificado de no deforestación); certificación de origen Nariño; solo productores de Colombia (no Ecuador).
+De negocio
+Sin inventario (intermediarios); comisión del 1% con valor mínimo; cantidad mínima de 100 kg por lote.
+De alcance (primera entrega)
+Sin pasarela de pago real (escrow simulado por máquina de estados); sin logística real, solo tracker de estados.
+De proceso
+Sprints de 2 semanas, releases mensuales, entrega por módulos funcionales con aprobación del stakeholder.
+De idioma
+Compradores de la Unión Europea; el soporte multi-idioma queda como requisito pendiente.
+
+2. Diagramas UML: actores y casos de uso
+2.1 Actores del sistema
+Actor
+Tipo
+Relación con el sistema
+Comprador UE
+Externo
+Busca lotes, negocia por chat, compra, verifica la muestra y aprueba el pago.
+Vendedor
+Externo
+Publica lotes y negocia; puede vender desde su propia empresa.
+Propietario de finca
+Externo
+Registra la finca y sube certificados (origen, no deforestación); entrega muestras.
+Administrador del sistema
+Interno
+Gestiona usuarios, disputas, bloqueos y comisiones.
+Administrador técnico
+Interno
+Configuración técnica, auditoría y respaldos.
+Transportador / Logística
+Externo
+Actualiza el tracker del pedido.
+Laboratorio de café (universidad)
+Externo
+Define los parámetros de calidad.
+Pasarela / Fiducia (escrow)
+Externo (simulado)
+Custodia el dinero bloqueado; en la primera entrega se simula.
+DIAN / Autoridades aduaneras
+Externo
+Receptor de los documentos de exportación.
+2.2 Vista de contexto
+El sistema RiTech SAS actúa como intermediario digital entre los productores de café/cacao de Nariño y los compradores de la Unión Europea, integrando servicios externos de calidad, custodia del dinero (escrow simulado) y autoridades aduaneras.
+
+2.3 Vista funcional (componentes: lollipop y sockets)
+El sistema se organiza en módulos de negocio (apps de Django). Cada módulo provee una interfaz de API (lollipop) y consume las interfaces que necesita (socket). La Web UI (React) consume todas las APIs; la persistencia se resuelve con PostgreSQL + PostGIS y los archivos con S3.
+
+2.4 Catálogo de casos de uso
+CU
+Caso de uso
+Actor(es)
+Historia
+CU-01
+Registrarse e iniciar sesión por rol
+Todos
+LIT-64
+CU-02
+Verificar identidad del usuario
+Admin sistema
+LIT-65
+CU-03
+Proteger la información privada
+Sistema
+LIT-66
+CU-04
+Bloquear/bannear usuario por fraude
+Admin sistema
+LIT-67
+CU-05
+Registrar finca geolocalizada
+Propietario
+LIT-68
+CU-06
+Cargar certificados de la finca
+Propietario
+LIT-69
+CU-07
+Consultar estado EUDR por finca
+Propietario/Admin
+LIT-70
+CU-08
+Gestionar perfil del vendedor
+Vendedor
+LIT-71
+CU-09
+Publicar lote de café/cacao
+Vendedor
+LIT-72
+CU-10
+Buscar y filtrar lotes
+Comprador
+LIT-73
+CU-11
+Negociar por chat
+Comprador/Vendedor
+LIT-74
+CU-12
+Acordar transacción inmutable
+Comprador/Vendedor
+LIT-75
+CU-13
+Bloquear dinero (escrow)
+Sistema/Pasarela
+LIT-76
+CU-14
+Calcular comisiones
+Sistema
+LIT-77
+CU-15
+Gestionar disputas
+Admin sistema
+LIT-78
+CU-16
+Registrar muestra del producto
+Propietario/Vendedor
+LIT-79
+CU-17
+Verificar calidad muestra vs. producto
+Comprador
+LIT-80
+CU-18
+Emitir veredicto y liberar pago
+Comprador
+LIT-81
+CU-19
+Actualizar estados del pedido
+Transportador
+LIT-82
+CU-20
+Consultar tracker del pedido
+Comprador/Vendedor
+LIT-83
+CU-21
+Administrar el sistema
+Admin sistema
+LIT-84
+CU-22
+Auditar y respaldar
+Admin técnico
+LIT-85
+CU-23
+Desplegar la plataforma
+Admin técnico
+LIT-86
+CU-24
+Verificar requisitos no funcionales
+Equipo QA
+LIT-87
+2.5 Casos de uso detallados
+CU-09 Publicar lote de café/cacao
+Actor: Vendedor
+Precondición: El vendedor tiene sesión activa, perfil completo y finca con certificados vigentes (estado EUDR habilitada).
+Flujo principal: 1. El vendedor entra a 'Publicar lote'. 2. Ingresa producto, origen, cantidad y precio (fijo o a acordar). 3. El sistema valida cantidad ≥ 100 kg (RN-1) y origen permitido (RN-10). 4. El sistema crea el lote en estado PUBLICADO. 5. El lote queda visible en el marketplace.
+Postcondición: Lote publicado; los compradores pueden encontrarlo y negociar.
+
+CU-12 Acordar transacción inmutable
+Actor: Comprador y Vendedor
+Precondición: Existe una negociación activa con un lote publicado y disponible.
+Flujo principal: 1. Las partes acuerdan precio. 2. El sistema crea la transacción con el precio acordado y calcula la comisión (1% con mínimo). 3. Marca la transacción como inmutable (RN-6). 4. Bloquea el dinero en escrow. 5. El lote pasa a VENDIDO.
+Postcondición: Transacción creada e inmutable; dinero bloqueado; cualquier cambio posterior requiere disputa.
+
+CU-17 Verificar calidad muestra vs. producto
+Actor: Comprador
+Precondición: Existe una transacción con muestra registrada y producto recibido.
+Flujo principal: 1. El comprador abre la verificación de calidad. 2. Compara el producto recibido contra la muestra usando los parámetros del laboratorio (RN-9). 3. Emite el veredicto ACEPTA o RECHAZA.
+Postcondición: Veredicto registrado; si ACEPTA se libera el pago, si RECHAZA se abre disputa.
+
+CU-19 Actualizar estados del pedido
+Actor: Transportador
+Precondición: Existe un envío asociado a una transacción.
+Flujo principal: 1. El transportador actualiza el estado del pedido. 2. El sistema registra el evento con fecha y observación. 3. Comprador y vendedor ven el tracker actualizado.
+Postcondición: Tracker actualizado con el historial de estados.
+
+
+3. Backlog trabajado en septiembre y responsables
+Elementos del product backlog (Jira LIT) trabajados durante el mes de septiembre, con su responsable. Septiembre cubre el cierre del Sprint 1 y el desarrollo del Sprint 2.
+Sprint
+Item
+Historia
+Responsable
+Sprint 1
+LIT-64
+Registro y login de usuarios por rol
+Jenifer Daniela Urbano
+Sprint 1
+LIT-65
+Verificación de identidad de usuarios
+Juan Camilo Lopez
+Sprint 1
+LIT-66
+Privacidad de información entre usuarios
+Nicolas Alejandro Diaz
+Sprint 1
+LIT-67
+Bloqueo y baneo de usuarios por fraude
+Jenifer Daniela Urbano
+Sprint 2
+LIT-68
+Registro de fincas con geolocalización
+Juan Camilo Lopez
+Sprint 2
+LIT-69
+Carga de certificados de la finca
+Nicolas Alejandro Diaz
+Sprint 2
+LIT-70
+Estado de cumplimiento EUDR por finca
+Jenifer Daniela Urbano
+Sprint 2
+LIT-71
+Perfil del vendedor
+Juan Camilo Lopez
+
+Nota: el Product Owner (Aida Liliana Rosero) y el Scrum Master (Nicolas Alejandro Diaz) acompañan la priorización y las ceremonias; la responsabilidad de implementación se distribuye en el equipo de desarrollo.
+
+4. Épicas e historias de usuario con criterios de aceptación
+4.1 Épicas (módulos)
+LIT-57 — M1: Usuarios y seguridad  (Sprint 1)
+Todos los roles pueden autenticarse y solo acceden a sus funciones.
+La identidad se verifica y los usuarios fraudulentos se bloquean.
+La información privada nunca se expone entre usuarios.
+
+LIT-58 — M2: Fincas y trazabilidad EUDR  (Sprint 2)
+La finca se registra con geolocalización y área.
+Los certificados se cargan con vigencia y validación.
+El estado EUDR se calcula y bloquea fincas sin certificados vigentes.
+
+LIT-59 — M3: Marketplace  (Sprint 3)
+Se publican lotes con cantidad ≥ 100 kg y precio válido.
+El comprador busca, filtra y negocia por chat.
+El acuerdo genera una transacción inmutable.
+
+LIT-60 — M4: Transacciones y escrow  (Sprint 4)
+El dinero se bloquea y solo se libera al aceptar el producto.
+La comisión del 1% con mínimo se calcula correctamente.
+Las disputas se gestionan por el administrador.
+
+LIT-61 — M5: Calidad  (Sprint 5)
+La muestra se registra y se compara con el producto recibido.
+El veredicto del comprador libera o retiene el pago.
+
+LIT-62 — M6: Logística (tracker)  (Sprint 5)
+El transportador actualiza los estados del pedido.
+El tracker es visible para comprador y vendedor.
+
+LIT-63 — M7: Administración  (Sprint 6)
+El admin del sistema gestiona usuarios, disputas y comisiones.
+El admin técnico audita y respalda.
+La plataforma se despliega en AWS y cumple los RNF.
+
+4.2 Historias de usuario y criterios de aceptación
+LIT-64 — Registro y login de usuarios por rol   [Épica LIT-57 · Sprint 1]
+El usuario se registra con nombre, identificación, email y firma una sola vez (RN-5).
+El login valida credenciales y devuelve acceso según el rol.
+Un usuario no puede ejecutar funciones fuera de su rol (RN-13).
+
+LIT-65 — Verificación de identidad de usuarios   [Épica LIT-57 · Sprint 1]
+El sistema valida identificación y firma antes de habilitar operaciones.
+Un usuario no verificado no puede publicar lotes ni comprar.
+
+LIT-66 — Privacidad de información entre usuarios   [Épica LIT-57 · Sprint 1]
+La ubicación y datos de fincas permanecen ocultos hasta una negociación activa (RN-13).
+Ningún endpoint expone datos privados de otro usuario.
+
+LIT-67 — Bloqueo y baneo de usuarios por fraude   [Épica LIT-57 · Sprint 1]
+El administrador puede bloquear y desbloquear usuarios (RN-12).
+Un usuario bloqueado no puede iniciar sesión ni operar.
+
+LIT-68 — Registro de fincas con geolocalización   [Épica LIT-58 · Sprint 2]
+El propietario registra la finca con polígono (PostGIS) y área.
+El sistema valida que el origen sea Nariño/Colombia (RN-2, RN-10).
+
+LIT-69 — Carga de certificados de la finca   [Épica LIT-58 · Sprint 2]
+Se cargan certificados de origen Nariño, no deforestación y orgánico con archivo y vigencia (RN-3).
+Un certificado vencido marca la finca como bloqueada.
+
+LIT-70 — Estado de cumplimiento EUDR por finca   [Épica LIT-58 · Sprint 2]
+La finca muestra estado HABILITADA o BLOQUEADA según sus certificados vigentes.
+Una finca bloqueada no puede publicar lotes.
+
+LIT-71 — Perfil del vendedor   [Épica LIT-58 · Sprint 2]
+El vendedor registra capacidad de producción, tipo de producto, variedad y calidad comprometida.
+El perfil se reutiliza en cada publicación.
+
+LIT-72 — Publicación de lotes de café/cacao   [Épica LIT-59 · Sprint 3]
+La cantidad mínima del lote es de 100 kg (RN-1).
+El precio puede ser fijo o 'a acordar' (RN-4).
+Solo vendedores con finca y certificados válidos pueden publicar.
+
+LIT-73 — Búsqueda y filtros de lotes para compradores   [Épica LIT-59 · Sprint 3]
+El comprador filtra por producto, origen, cantidad y precio.
+Los resultados ocultan los datos privados del vendedor.
+
+LIT-74 — Chat de negociación comprador-vendedor   [Épica LIT-59 · Sprint 3]
+Los mensajes se intercambian dentro de una negociación.
+La información privada se revela solo dentro de la negociación activa.
+
+LIT-75 — Transacción de venta inmutable   [Épica LIT-59 · Sprint 3]
+Al acordar, se crea la transacción y no admite modificaciones (RN-6).
+Cualquier cambio posterior pasa por disputa.
+
+LIT-76 — Dinero bloqueado (escrow) hasta aceptación   [Épica LIT-60 · Sprint 4]
+El dinero se bloquea y solo se libera al aceptar el producto (RN-7).
+El escrow maneja los estados BLOQUEADO, LIBERADO y DEVUELTO.
+
+LIT-77 — Cálculo de comisiones (1% con valor mínimo)   [Épica LIT-60 · Sprint 4]
+La comisión del 1% con valor mínimo se calcula para comprador y vendedor (RN-11).
+El cálculo es exacto y visible en la transacción.
+
+LIT-78 — Gestión de disputas   [Épica LIT-60 · Sprint 4]
+El administrador gestiona la disputa con motivo, estado y resolución.
+Una disputa abierta congela la liberación del pago.
+
+LIT-79 — Registro de muestra del producto   [Épica LIT-61 · Sprint 5]
+El propietario/vendedor registra la muestra del producto (RN-8).
+La muestra queda asociada a la transacción.
+
+LIT-80 — Verificación de calidad muestra vs. producto recibido   [Épica LIT-61 · Sprint 5]
+El comprador compara el producto recibido con la muestra.
+Se usan los parámetros definidos por el laboratorio de café (RN-9).
+
+LIT-81 — Veredicto del comprador libera el pago   [Épica LIT-61 · Sprint 5]
+Si el comprador acepta, se libera el escrow al vendedor.
+Si rechaza, se abre una disputa.
+
+LIT-82 — Actualización de estados del pedido por el transportador   [Épica LIT-62 · Sprint 5]
+El transportador actualiza los estados (preparado → enviado → en tránsito → entregado) (RN-14).
+Cada cambio registra fecha y observación.
+
+LIT-83 — Tracker del pedido visible para comprador y vendedor   [Épica LIT-62 · Sprint 5]
+Comprador y vendedor ven el historial de estados del pedido.
+El tracker solo muestra pedidos de la propia transacción.
+
+LIT-84 — Panel del administrador del sistema   [Épica LIT-63 · Sprint 6]
+El admin gestiona usuarios, disputas, bloqueos y comisiones.
+Toda acción administrativa queda registrada.
+
+LIT-85 — Panel del administrador técnico (auditoría y respaldos)   [Épica LIT-63 · Sprint 6]
+El admin técnico consulta la auditoría de acciones.
+Puede verificar el estado de los respaldos en AWS.
+
+LIT-86 — Despliegue de la plataforma en AWS   [Épica LIT-63 · Sprint 6]
+El frontend React se sirve desde S3 + CloudFront.
+El backend Django corre en Elastic Beanstalk con RDS PostgreSQL + PostGIS.
+
+LIT-87 — Requisitos no funcionales de la plataforma   [Épica LIT-63 · Sprint 6]
+Se verifican los RNF (exactitud, usabilidad, fiabilidad, mantenibilidad, seguridad y respaldo) antes de cada release.
+Los resultados quedan registrados en el plan de pruebas.
+
+
+5. Estructura de la base de datos
+Motor: PostgreSQL + PostGIS. Las geometrías de las fincas (polígonos EUDR) se almacenan con el tipo geometry(Polygon, 4326). A continuación el modelo entidad-relación y el detalle de tablas y relaciones.
+
+5.1 Tablas y columnas
+Tabla: usuario
+Usuarios del sistema y sus roles.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+email
+varchar
+UNIQUE
+password_hash
+varchar
+
+nombre
+varchar
+
+identificacion
+varchar
+UNIQUE
+firma
+varchar
+
+rol
+varchar
+enum Rol
+estado
+varchar
+enum EstadoUsuario
+fecha_registro
+timestamp
+
+Relaciones: 1 usuario → N fincas, N lotes, N auditorías; 1 → 1 perfil_vendedor.
+
+Tabla: finca
+Fincas registradas por el propietario.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+propietario_id
+UUID
+FK → usuario.id
+nombre
+varchar
+
+ubicacion
+geometry(Polygon,4326)
+PostGIS
+area_ha
+numeric
+
+cultivos
+varchar
+
+estado_eudr
+varchar
+enum EstadoEUDR
+Relaciones: 1 finca → N certificados; N fincas → 1 usuario.
+
+Tabla: certificado
+Certificados de la finca (origen, no deforestación, orgánico).
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+finca_id
+UUID
+FK → finca.id
+tipo
+varchar
+enum TipoCertificado
+archivo_url
+varchar
+
+fecha_vigencia
+date
+
+estado_validacion
+varchar
+
+Relaciones: N certificados → 1 finca.
+
+Tabla: perfil_vendedor
+Datos productivos del vendedor.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+vendedor_id
+UUID
+FK → usuario.id, UNIQUE
+capacidad_produccion
+numeric
+
+tipo_producto
+varchar
+enum TipoProducto
+variedad
+varchar
+
+calidad_comprometida
+varchar
+
+Relaciones: 1 perfil → 1 usuario.
+
+Tabla: lote
+Lotes publicados por el vendedor.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+vendedor_id
+UUID
+FK → usuario.id
+producto
+varchar
+enum TipoProducto
+origen
+varchar
+
+cantidad_kg
+numeric
+>= 100
+precio
+numeric
+
+modalidad_precio
+varchar
+enum ModalidadPrecio
+estado
+varchar
+enum EstadoLote
+publicado_en
+timestamp
+
+Relaciones: N lotes → 1 vendedor; 1 lote → N negociaciones.
+
+Tabla: negociacion
+Negociación entre comprador y vendedor sobre un lote.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+lote_id
+UUID
+FK → lote.id
+comprador_id
+UUID
+FK → usuario.id
+estado
+varchar
+
+iniciada_en
+timestamp
+
+Relaciones: N negociaciones → 1 lote; 1 negociación → N mensajes; 1 → 0..1 transacción.
+
+Tabla: mensaje
+Mensajes del chat de negociación.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+negociacion_id
+UUID
+FK → negociacion.id
+emisor_id
+UUID
+FK → usuario.id
+texto
+text
+
+enviado_en
+timestamp
+
+Relaciones: N mensajes → 1 negociación.
+
+Tabla: transaccion
+Acuerdo de venta inmutable.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+negociacion_id
+UUID
+FK → negociacion.id, UNIQUE
+comprador_id
+UUID
+FK → usuario.id
+vendedor_id
+UUID
+FK → usuario.id
+precio_acordado
+numeric
+
+comision
+numeric
+1% con mínimo
+estado
+varchar
+enum EstadoTransaccion
+inmutable
+boolean
+true
+acordada_en
+timestamp
+
+Relaciones: 1 transacción → 1 escrow, 1 envío, N disputas, N muestras.
+
+Tabla: escrow
+Dinero bloqueado de la transacción.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+transaccion_id
+UUID
+FK → transaccion.id, UNIQUE
+monto
+numeric
+
+estado
+varchar
+enum EstadoEscrow
+fecha_liberacion
+timestamp
+
+Relaciones: 1 escrow → 1 transacción.
+
+Tabla: muestra
+Muestra del producto registrada.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+transaccion_id
+UUID
+FK → transaccion.id
+registrada_por
+UUID
+FK → usuario.id
+registrada_en
+timestamp
+
+Relaciones: N muestras → 1 transacción; 1 muestra → 0..1 verificación.
+
+Tabla: verificacion_calidad
+Verificación de calidad muestra vs. producto.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+muestra_id
+UUID
+FK → muestra.id, UNIQUE
+parametros
+text
+
+veredicto
+varchar
+enum Veredicto
+verificado_en
+timestamp
+
+Relaciones: 1 verificación → 1 muestra.
+
+Tabla: disputa
+Disputas asociadas a una transacción.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+transaccion_id
+UUID
+FK → transaccion.id
+motivo
+text
+
+estado
+varchar
+enum EstadoDisputa
+resolucion
+text
+
+Relaciones: N disputas → 1 transacción.
+
+Tabla: envio
+Envío del pedido.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+transaccion_id
+UUID
+FK → transaccion.id, UNIQUE
+transportador_id
+UUID
+FK → usuario.id
+estado
+varchar
+enum EstadoEnvio
+creado_en
+timestamp
+
+Relaciones: 1 envío → 1 transacción; 1 envío → N eventos.
+
+Tabla: evento_envio
+Eventos del tracker del pedido.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+envio_id
+UUID
+FK → envio.id
+estado
+varchar
+enum EstadoEnvio
+fecha
+timestamp
+
+observacion
+varchar
+
+Relaciones: N eventos → 1 envío.
+
+Tabla: auditoria
+Registro de acciones para el admin técnico.
+Columna
+Tipo
+Restricción
+id
+UUID
+PK
+usuario_id
+UUID
+FK → usuario.id
+accion
+varchar
+
+fecha
+timestamp
+
+Relaciones: N registros → 1 usuario.
+
