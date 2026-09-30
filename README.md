@@ -14,7 +14,6 @@ Plataforma web que actúa como **intermediario digital** entre productores colom
 
 ## Entregas
 
-- **[Sprint 2 — Entrega](https://github.com/Jenifrutica/ritech-marketplace/wiki/Sprint-2-Entrega)** (wiki): requerimientos, UML, backlog de septiembre, épicas/historias y base de datos.
 - Archivos: [`deliverables/sprint-2/`](deliverables/sprint-2/) — documento (A), plan de pruebas (B) y presentación (C).
 - Diagramas 4+1 + ER en PlantUML/PNG: [`deliverables/sprint-2/diagramas/`](deliverables/sprint-2/diagramas/).
 
@@ -22,12 +21,10 @@ Plataforma web que actúa como **intermediario digital** entre productores colom
 
 La documentación vive en la **[Wiki](https://github.com/Jenifrutica/ritech-marketplace/wiki)** del repositorio:
 
-- [Proyecto RiTech SAS](https://github.com/Jenifrutica/ritech-marketplace/wiki/Home)
-- [Reglas de negocio y roles](https://github.com/Jenifrutica/ritech-marketplace/wiki/Reglas-de-negocio-y-roles)
+- [Inicio](https://github.com/Jenifrutica/ritech-marketplace/wiki/Home)
 - [Product Backlog (Jira LIT)](https://github.com/Jenifrutica/ritech-marketplace/wiki/Product-Backlog-Jira-LIT)
 - [Sprints y metodología ágil](https://github.com/Jenifrutica/ritech-marketplace/wiki/Sprints-y-metodologia-agil)
-- [Arquitectura técnica y base de datos](https://github.com/Jenifrutica/ritech-marketplace/wiki/Arquitectura-tecnica-y-base-de-datos)
-- [Preguntas al stakeholder](https://github.com/Jenifrutica/ritech-marketplace/wiki/Preguntas-al-stakeholder)
+- [Diagramas](https://github.com/Jenifrutica/ritech-marketplace/wiki/Diagramas)
 
 También hay una copia en [`docs/`](docs/) para búsqueda y control de versiones.
 

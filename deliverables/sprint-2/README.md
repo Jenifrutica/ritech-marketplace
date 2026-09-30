@@ -27,4 +27,4 @@ Fuentes editables en PlantUML (`.puml`) y su render (`.png`) en `diagramas/`:
 - `05-despliegue` — vista de despliegue (AWS)
 - `06-er` — modelo entidad-relación de la base de datos
 
-La versión navegable está en la [Wiki del proyecto](https://github.com/Jenifrutica/ritech-marketplace/wiki/Sprint-2-Entrega).
+La versión navegable está en la [Wiki del proyecto](https://github.com/Jenifrutica/ritech-marketplace/wiki/Diagramas).
