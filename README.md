@@ -90,9 +90,7 @@ Fotografías libres de Wikimedia Commons en `public/images`, con autor y licenci
 
 ## Flujo de trabajo
 
-1. Revisar el tablero de Projects y el Milestone del sprint activo.
-2. Tomar un Issue, moverlo a *In progress*.
-3. Abrir un Pull Request y cerrar el Issue al cumplir el *Definition of Done*.
+Revisar Para las diapositivas el archivo DIAPOSITIVAS_SPRINT2.txt
 
 ---
 
